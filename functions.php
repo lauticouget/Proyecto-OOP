@@ -1,86 +1,10 @@
 <?php
 session_start();
-function giveSession()
-    {
-        if(isset($_SESSION['username']))
-        {
-            return "Loged";
-        }else{
-            return "Not Loged";
-        }
-    }
-
-
-function dd($var)
-    {
-        echo"<pre>";
-        die(var_dump($var));
-        echo "</pre>";
-    }
 
 
 
 
-function keepValue($userInput)
-{
-    if(isset($_POST[$userInput]))
-    {
-        return $_POST[$userInput];
-    }
-}
 
-function validate($data)
-{
-    $errors=[];
-
-    if($data)
-    {
-        $name=$data['name'];
-        $username= trim($data['username']);
-        $email=trim($data['email']);
-        $password=$data['password'];
-        $cpassword=$data['cpassword'];
-
-        if(!$name)
-        {
-            $errors['name']='Completar Nombre.';
-        }
-
-        if (!$username)
-        {
-            $errors['username']='completar Nombre de Usuario.';
-            
-        }elseif(strlen($username)<5){
-                $errors['username']='El nombre de Usuario Debe ser más largo.';
-        }
-
-        if(!$email)
-        {
-            $errors['email']='Completar Email.';
-        }elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-                $errors['email']='El Email es incompatible.';
-            }
-        }
-
-        if(!$password)
-        {
-            $errors['password']='Completar contraseña.';
-        }elseif(strlen($password)<6){
-            $errors['password']='La contraseña Debe ser más larga.';
-        }
-
-        if(!isset($errors['password']))
-        {
-            if($cpassword!=$password)
-            {
-                $errors['cpassword']='La Confirmación de contraseña debe ser identica a la contraseña ingresada.';
-            }
-        }
-        return $errors;
-
-
-            
-}
 
 function createUser($data)
 {
@@ -180,17 +104,7 @@ function restoreUser($data)
 
 
 
-function decodeUsers()
-{
-    $jsonFile = file_get_contents('users.json');
-    $jsonUsers = explode(PHP_EOL , $jsonFile);
-    array_pop($jsonUsers);
-    foreach($jsonUsers as $jsonUser)
-    { 
-        $users[]=json_decode($jsonUser, true);        
-    }
-    return $users;    
-}
+
 
 function decodeDeletedUsers()
 {
@@ -232,72 +146,16 @@ function findUserWhitName($data)
         }    
     
 }
-function findUser(array $data)
-{
-    if(file_get_contents('users.json') != "")
-        {
-            if(decodeUsers()!= null)
-            {
-                $users=decodeUsers();   
-                foreach($users as $user)
-                {
-                    if($user['username'] == $data['username'])
-                    {    
-                        return $user;
-                        exit;
-                    }
-                }
-            } 
-        }else{
-            return null;
-        }
-       
-    
-}
 
 
-function checkPassword($data, $foundUser)
-    {
-        return password_verify($data['password'], $foundUser['password']);
-    }
 
-function Login($foundUser)
-    {
-        $_SESSION['username']=$foundUser['username'];
-        $_SESSION['role']=$foundUser['role'];
-        setcookie('username', $foundUser['username'], time()+3600);
-    }
-function userRecord($foundUser)
-    {
-    setcookie ('userRecord', $foundUser['username'], time()+(60*60*24*30*12));
-    
-    }
 
-function adminController()
-    {
-        if($_SESSION['role']==7)
-            {
-                return true;
-            }
-            else{
-                return false;
-            }
-        
-    }
-function loginController()
-{
-    if(isset($_SESSION['username']))
-    {
-        return true;
-    }elseif(isset($_COOKIE['username']))
-    {
-        $_SESSION['username']=$_COOKIE['username'];
-        return true;
-    }else{
-        return false;
-    }
 
-}
+
+
+
+
+
 
 
 function logout()
