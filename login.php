@@ -1,8 +1,35 @@
 <?php
-include_once 'php/controllers/login.controller.php';
-include_once 'php/controllers/session.controller.php';
+include_once('functions.php');
 
 
+if($_POST)
+{
+  $foundUser = findUser($_POST);
+ 
+  if ($foundUser != null)
+  {
+    $checkedPassword=checkPassword($_POST,$foundUser);
+    if($checkedPassword) 
+      {        
+        login($foundUser);
+        
+        if(loginController())
+          {
+            if(isset($_POST['userRecord']))
+              {
+                userRecord($foundUser);
+              }
+            header('location: index.php');
+          }
+      }
+      
+  }
+  
+}
+if(isset($_SESSION['username']))
+  {
+    header('location: index.php');
+  }
 
 ?>
 <!DOCTYPE html>
@@ -28,7 +55,7 @@ include_once 'php/controllers/session.controller.php';
       <a class="boton_inicio"  href="index.php">Ir al inicio</a>
     </div>
     <div class="container form-container">
-        <form action="php/controllers/login.controller.php" method="post" name="loginForm " class="  row  mx-auto ">
+        <form action="" method="post" name="loginForm " class="  row  mx-auto ">
             <div class="col-xs-4 col-sm-4 col-md-12 col-lg-12 mx-auto text-center">
                 <label  class="userypass">Username</label>
             </div>

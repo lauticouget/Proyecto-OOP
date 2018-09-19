@@ -1,4 +1,5 @@
 <?php
+session_start();
 function giveSession()
     {
         if(isset($_SESSION['username']))
@@ -17,7 +18,9 @@ function dd($var)
         echo "</pre>";
     }
 
-    
+
+
+
 function keepValue($userInput)
 {
     if(isset($_POST[$userInput]))
@@ -26,3 +29,6 @@ function keepValue($userInput)
     }
 }
 
+
+   
+?>
