@@ -1,5 +1,4 @@
 <?php
-session_start();
 function giveSession()
     {
         if(isset($_SESSION['username']))

@@ -1,30 +1,29 @@
 <?php
-include_once('functions.php');
+require 'loader.php';
 
 
 if($_POST)
 {
-  $foundUser = findUser($_POST);
+  $foundUser = $jsonManager->findUser($_POST);
  
   if ($foundUser != null)
   {
-    $checkedPassword=checkPassword($_POST,$foundUser);
+    $checkedPassword=$validator->checkPassword($_POST,$foundUser);
     if($checkedPassword) 
       {        
-        login($foundUser);
+        $sessionManager->login($foundUser);
         
-        if(loginController())
+        if($sessionManager->loginController())
           {
             if(isset($_POST['userRecord']))
               {
-                userRecord($foundUser);
+                $sessionManager->userRecord($foundUser);
               }
             header('location: index.php');
           }
       }
       
   }
-  
 }
 if(isset($_SESSION['username']))
   {

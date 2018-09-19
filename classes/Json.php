@@ -1,7 +1,5 @@
 <?php
- include_once 'Base.php';
-
-
+require 'Base.php';
  class Json extends Base
 {
     public function createUser($data)
@@ -67,48 +65,47 @@
                 }
             
         }
-        public function restoreUser($data)
-        {
-            $deletedUsers=decodeDeletedUsers();
-            $data=trim($data);
-            foreach($deletedUsers as $deletedUser)
-                {
-                    if($deletedUser['username'] == $data)
-                        {
-                            $user=$deletedUser;
-                            $jsonUser=json_encode($user);
-                            file_put_contents('users.json', $jsonUser . PHP_EOL, FILE_APPEND);
-                            unset($deletedUser);
-                        }    
-
-                    if(isset($deletedUser))
-                        {
-                            $jsonDeletedUser=json_encode($deletedUser);
-                            $jsonDeletedUsers[]=$jsonDeletedUser;
-                            
-                        }
-                }
-            if(count($jsonDeletedUsers) > 0)
+    public function restoreUser($data)
+    {
+        $deletedUsers=decodeDeletedUsers();
+        $data=trim($data);
+        foreach($deletedUsers as $deletedUser)
             {
+                if($deletedUser['username'] == $data)
+                    {
+                        $user=$deletedUser;
+                        $jsonUser=json_encode($user);
+                        file_put_contents('users.json', $jsonUser . PHP_EOL, FILE_APPEND);
+                        unset($deletedUser);
+                    }    
+
+                if(isset($deletedUser))
+                    {
+                        $jsonDeletedUser=json_encode($deletedUser);
+                        $jsonDeletedUsers[]=$jsonDeletedUser;
+                        
+                    }
+            }
+            if(count($jsonDeletedUsers) > 0){
                 $fullDeletedJson=implode(PHP_EOL, $jsonDeletedUsers);
                 file_put_contents('deleted.users.json', $fullDeletedJson . PHP_EOL);
             }else{
                 file_put_contents('deleted.users.json', "");
             }
             
+    }
+    public function decodeUsers()
+    {
+        $jsonFile = file_get_contents('users.json');
+        $jsonUsers = explode(PHP_EOL , $jsonFile);
+        array_pop($jsonUsers);
+        foreach($jsonUsers as $jsonUser)
+        { 
+            $users[]=json_decode($jsonUser, true);        
         }
-        public function decodeUsers()
-        {
-            $jsonFile = file_get_contents('users.json');
-            $jsonUsers = explode(PHP_EOL , $jsonFile);
-            array_pop($jsonUsers);
-            foreach($jsonUsers as $jsonUser)
-            { 
-                $users[]=json_decode($jsonUser, true);        
-            }
-            return $users;    
-        }
-        public function decodeDeletedUsers()
+        return $users;    
+    }
+    public function decodeDeletedUsers()
     {
         $jsonFile = file_get_contents('deleted.users.json');
         $jsonUsers = explode(PHP_EOL , $jsonFile);
@@ -150,9 +147,9 @@
     {
         if(file_get_contents('users.json') != "")
             {
-                if(decodeUsers()!= null)
+                if($this->decodeUsers() != null)
                 {
-                    $users=decodeUsers();   
+                    $users = $this->decodeUsers();   
                     foreach($users as $user)
                     {
                         if($user['username'] == $data['username'])
@@ -169,25 +166,5 @@
         
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+$jsonManager= new Json;

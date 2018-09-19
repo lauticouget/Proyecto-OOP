@@ -123,3 +123,5 @@ class Validator
     }
 
 }
+
+$validator= new Validator;

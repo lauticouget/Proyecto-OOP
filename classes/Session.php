@@ -1,5 +1,5 @@
 <?php 
-sessionStart();
+session_Start();
 class Session
 {
     public function Login($foundUser)
@@ -44,3 +44,4 @@ class Session
         setcookie('username', "", time()-1);
     }
 }
+$sessionManager= new Session;

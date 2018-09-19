@@ -1,11 +1,11 @@
 <?php
-include('functions.php');
+include('loader.php');
 include('head.php');
 include_once('navBar.php');
 
 
 
-if(!adminController())
+if(!$sessionManager->adminController())
     {
         header('location:index.php');
     }
@@ -20,7 +20,7 @@ if(file_get_contents('users.json')!= "")
     <div class="container">
         <h1  class="display-5">Usuarios</h1>
             <?php 
-            foreach(decodeUsers() as $user)
+            foreach($jsonManager->decodeUsers() as $user)
                 {
                 ?>
                 <form action="eraseUser.php" method="post">
