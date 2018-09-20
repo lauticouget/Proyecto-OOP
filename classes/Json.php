@@ -39,7 +39,7 @@ require 'Base.php';
     }
     public function eraseUser($data)
         {
-            $users=decodeUsers();
+            $users=$this->decodeUsers();
             $data=trim($data);
             foreach($users as $user)
                 {

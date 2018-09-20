@@ -1,21 +1,17 @@
 <?php 
-include_once('functions.php');
+include_once('loader.php');
 
 
 
 if($_POST)
-    {
-       
-        if($_SESSION['username'] != (trim($_POST['eraseUser'])))
-            {
-                eraseUser($_POST['eraseUser']);   
+    { 
+        if($_SESSION['username'] != (trim($_POST['eraseUser']))){
+                $jsonManager->eraseUser($_POST['eraseUser']);   
                 header('location: admin.php');
-            }
-        else
+            }else
             {
                 header('location: admin.php');
-            }
-        
+            } 
     }
 
 ?>

@@ -1,11 +1,11 @@
 <?php 
-include_once('functions.php');
+include_once('loader.php');
 
 
 
 if($_POST)
     {
-        restoreUser($_POST['restoreUser']);   
+        $jsonManager->restoreUser($_POST['restoreUser']);
         header('location: admin.php');
     }
 

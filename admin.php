@@ -46,7 +46,7 @@ if(file_get_contents('deleted.users.json')!= "")
         <div class="container">
             <h2  class="display-6">Eliminados</h2>
         <?php
-        foreach(decodeDeletedUsers() as $deletedUser)
+        foreach($jsonManager->decodeDeletedUsers() as $deletedUser)
             {
             ?>
             <form action="restoreUser.php" method="post">
