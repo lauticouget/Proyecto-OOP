@@ -67,7 +67,7 @@ require 'Base.php';
         }
     public function restoreUser($data)
     {
-        $deletedUsers=decodeDeletedUsers();
+        $deletedUsers=$this->decodeDeletedUsers();
         $data=trim($data);
         foreach($deletedUsers as $deletedUser)
             {
@@ -78,6 +78,7 @@ require 'Base.php';
                         file_put_contents('users.json', $jsonUser . PHP_EOL, FILE_APPEND);
                         unset($deletedUser);
                     }    
+                    
 
                 if(isset($deletedUser))
                     {
@@ -109,12 +110,13 @@ require 'Base.php';
     {
         $jsonFile = file_get_contents('deleted.users.json');
         $jsonUsers = explode(PHP_EOL , $jsonFile);
+        
         array_pop($jsonUsers);
 
         foreach($jsonUsers as $jsonUser)
         {
+            $users[]=json_decode($jsonUser, true); 
             
-            $users[]=json_decode($jsonUser, true);        
         }
         return $users;
     }
