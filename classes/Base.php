@@ -10,3 +10,5 @@ abstract class Base
     abstract public function findUser(array $data);
   
 }
+
+?>

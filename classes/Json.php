@@ -2,6 +2,7 @@
 require 'Base.php';
  class Json extends Base
 {
+
     public function createUser($data)
     {
         $user=[
@@ -14,6 +15,7 @@ require 'Base.php';
         $user['id']=generateId();
         return $user;
     }
+
     public function generateId()
     {
         $file= file_get_contents('users.json');
@@ -37,6 +39,7 @@ require 'Base.php';
         file_put_contents('users.json', $jsonUser . PHP_EOL, FILE_APPEND);
         
     }
+
     public function eraseUser($data)
         {
             $users=$this->decodeUsers();
@@ -65,36 +68,46 @@ require 'Base.php';
                 }
             
         }
-    public function restoreUser($data)
+    public function restoreUser($data)  
     {
+        $jsonDeletedUser = "";
+        $jsonDeletedUsers = [];
+
         $deletedUsers=$this->decodeDeletedUsers();
         $data=trim($data);
+        
         foreach($deletedUsers as $deletedUser)
-            {
-                if($deletedUser['username'] == $data)
-                    {
-                        $user=$deletedUser;
-                        $jsonUser=json_encode($user);
-                        file_put_contents('users.json', $jsonUser . PHP_EOL, FILE_APPEND);
-                        unset($deletedUser);
-                    }    
-                    
+        {
+            if($deletedUser['username'] == $data) {
+                $user=$deletedUser;
+                $jsonUser=json_encode($user);
+                file_put_contents('users.json', $jsonUser . PHP_EOL, FILE_APPEND);
+                unset($deletedUser);
+            }    
+                
+            if(isset($deletedUser)) {
 
-                if(isset($deletedUser))
-                    {
-                        $jsonDeletedUser=json_encode($deletedUser);
-                        $jsonDeletedUsers[]=$jsonDeletedUser;
-                        
-                    }
+                $jsonDeletedUser=json_encode($deletedUser);
+
+                $jsonDeletedUsers[] = $jsonDeletedUser;
+                    
             }
-            if(count($jsonDeletedUsers) > 0){
-                $fullDeletedJson=implode(PHP_EOL, $jsonDeletedUsers);
-                file_put_contents('deleted.users.json', $fullDeletedJson . PHP_EOL);
-            }else{
-                file_put_contents('deleted.users.json', "");
-            }
+
+        }
+
+        if(count($jsonDeletedUsers) > 0) {
+
+            $fullDeletedJson = implode(PHP_EOL, $jsonDeletedUsers);
+            file_put_contents('deleted.users.json', $fullDeletedJson . PHP_EOL);
+
+        } else {
+
+            file_put_contents('deleted.users.json', "");
+
+        }
             
     }
+
     public function decodeUsers()
     {
         $jsonFile = file_get_contents('users.json');
@@ -108,18 +121,21 @@ require 'Base.php';
     }
     public function decodeDeletedUsers()
     {
+        $users = [];
+
         $jsonFile = file_get_contents('deleted.users.json');
         $jsonUsers = explode(PHP_EOL , $jsonFile);
         
         array_pop($jsonUsers);
 
-        foreach($jsonUsers as $jsonUser)
-        {
+        foreach($jsonUsers as $jsonUser) {
             $users[]=json_decode($jsonUser, true); 
             
         }
+        
         return $users;
     }
+
     public function findJsonUser($data)
     {
         if(decodeUsers()!= null)
@@ -169,4 +185,9 @@ require 'Base.php';
     }
 
 }
+
 $jsonManager= new Json;
+
+
+
+?>
