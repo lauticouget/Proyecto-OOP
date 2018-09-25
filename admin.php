@@ -1,14 +1,16 @@
 <?php
 include('loader.php');
-include('head.php');
-include_once('navBar.php');
-
-
-
-if(!$sessionManager->adminController())
+if($sessionManager->adminController()== false)
     {
         header('location:index.php');
     }
+include('head.php');
+include_once('navBar.php');
+
+// var_dump($sessionManager->adminController());
+// exit;
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

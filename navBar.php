@@ -3,6 +3,7 @@
     <a class="navbar-brand mx-auto btn btn-success" href="perfil.php">Mi Perfíl</a>
     <a class="navbar-brand mx-auto btn btn-secondary" href="contacto.php">Contáctanos</a>
     <a class="navbar-brand mx-auto btn btn-secondary" href="faq.php" >Preguntas Frecuentes</a>
+    <a class="navbar-brand mx-auto btn btn-secondary" href="Products.php" >Productos</a>
     <div class="navbar-brand mx-auto ">
         <label for="search">Search</label>
         <input type="Search">

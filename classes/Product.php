@@ -2,33 +2,62 @@
 
 class Product
 {
-    private $nombre;
-    private $precio;
+    private $name;
+    private $price;
+    private $category;
+    private $imageRoot;
 
-    public function __construct(string $nombre, float $precio) {
-        $this->nombre=$nombre;
-        $this->precio=$precio;
+
+    public function __construct(string $name, float $price, string $category, string $imageRoot) {
+        $this->name=$name;
+        $this->price=$price;
+        $this->category=$category;
+        $this->imageRoot->$imageRoot;
     }
 
-    public function getNombre()
+    public function getName()
     {
-        return $this->nombre;
+        return $this->name;
     }
-    public function setNombre($nombre)
+    public function setName($name)
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getPrecio()
+    public function getPrice()
     {
-        return $this->precio;
+        return $this->price;
     }
 
-    public function setPrecio($precio)
+    public function setPrice($price)
     {
-        $this->precio = $precio;
+        $this->price = $price;
+
+        return $this;
+    }
+ 
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageRoot()
+    {
+        return $this->imageRoot;
+    }
+
+    public function setImageRoot($imageRoot)
+    {
+        $this->imageRoot = $imageRoot;
 
         return $this;
     }

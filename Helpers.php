@@ -1,4 +1,6 @@
 <?php
+
+
 function giveSession()
     {
         if(isset($_SESSION['username']))

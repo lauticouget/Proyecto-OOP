@@ -1,6 +1,5 @@
 <?php
 
-
 class Validator
 
 {
@@ -69,12 +68,15 @@ class Validator
         $defaultExt=".jpg";
 
         /* Capturamos el directorio del proyecto. */
-        $dbPath= dirname(__FILE__); 
-
+        $proyectPath= dirname(__FILE__); 
+        $proyectPath=dirname($proyectPath);
+        
+        
+        
         /* Cambiamos el directorio por la Base de Imagenes */
-        $dbPath=$dbPath . "/images/perfiles/";
+        $profilePath=$proyectPath . "/images/perfiles/";
         /* Le agregamos la concatenacion de nombre y extensión de cada foto de perfil */
-        $dbPath=$dbPath . "perfil" . $id ;
+        $profilePath=$profilePath . "perfil" . $id ;
 
         if ($_FILES['avatar']['error'] == UPLOAD_ERR_OK)
             {   /* Si el archivo se subió correctamente extraemos "imagen.pjg" a una variable */
@@ -92,34 +94,88 @@ class Validator
                         return $errores;
                     }
 
-                $dbPath=$dbPath . "." . $ext;
+                $profilePath=$profilePath . "." . $ext;
                 /* Movemos el archivo desde el espacio temporal (Server) A la base de datos (Renombrandolo con $dbPath); */
-                move_uploaded_file($serverPath, $dbPath);
+                move_uploaded_file($serverPath, $profilePath);
                     
 
                             /* SI NO SUBEN FOTO */            
             }
             
-        if($_FILES['avatar']['name'] == "" )
-            {   $dirH="C:/xampp/htdocs/proyecto-integrador/images/perfilHombre.JPEG";
-                $dirM="C:/xampp/htdocs/proyecto-integrador/images/perfilMujer.jpg";
             
-                $dbPath=$dbPath . $defaultExt;
-            
-                
 
-                if($title =="Sr")
-                    {
-                        copy($dirH, $dbPath);
-                    }
-                elseif($title =='Sra')
-                    {
-                        copy($dirM, $dbPath);
-                    }
-            }
+        if($_FILES['avatar']['name'] == "" ) {
+            $parentDir= dirname(__FILE__); 
+            $parentDir=dirname($parentDir);
+            
+            $dirH=$parentDir."\images\perfilHombre.jpg";
+            
+            $dirM=$parentDir."\images\perfilMujer.jpg";
+            
+            
+            $profilePath=$profilePath . $defaultExt;
+        
+            
+
+            if($title =="Sr")
+                {                    
+                    copy($dirH, $profilePath);
+                }
+            elseif($title =='Sra')
+                {
+                    copy($dirM, $profilePath);
+                }
+        }
         
         return $errores;
             
+    }
+    public function saveProductImage()
+    {
+        $errores=[];
+        $defaultExt=".jpg";
+
+        /* Capturamos el directorio del proyecto. */
+        $proyectPath= dirname(__FILE__); 
+        $proyectPath=dirname($proyectPath);
+        
+        
+        
+        /* Cambiamos el directorio por la Base de Imagenes */
+        $productPath=$proyectPath . "/images/products/";
+        /* Le agregamos la concatenacion de nombre y extensión de cada foto de perfil */
+        if ($_FILES['image']['error'] == UPLOAD_ERR_OK)
+            {   /* Si el archivo se subió correctamente extraemos "imagen.pjg" a una variable */
+                $nombre=$_FILES['image']['name'];                
+                /* extraemos la extension del nombre */
+                $ext=pathinfo($nombre , PATHINFO_EXTENSION);
+
+                /* Capturamos la localización completa de la imagen en el servidor */
+                $serverPath=$_FILES['image']['tmp_name'];
+
+
+                if($ext != "jpeg" && $ext != "jpg" && $ext != "png")
+                    {/* Si la imagen no es del tipo correcto devolvemos error */
+                        $errores['image']="Débes subir tu imagen en JPG, PNG o JPEG.";
+                        return $errores;
+                    }
+
+                $productPath=$productPath . $_POST['name'] . "." . $ext;
+                /* Movemos el archivo desde el espacio temporal (Server) A la base de datos (Renombrandolo con $productPath); */
+                move_uploaded_file($serverPath, $productPath);
+                    
+
+                            /* SI NO SUBEN FOTO */            
+            }
+            
+            
+
+        if($_FILES['image']['name'] == "" ) { 
+            $dirGenericProduct=$proyectPath."\images\genericProduct.png";
+            $productPath=$productPath . $_POST['name'] . $defaultExt;    
+            copy($dirGenericProduct, $productPath);      
+        }
+        return $errores;  
     }
 
 }

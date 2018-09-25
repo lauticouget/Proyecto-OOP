@@ -12,7 +12,7 @@ require 'Base.php';
             'email'=> $_POST['email'],
             'role' => 1
         ];
-        $user['id']=generateId();
+        $user['id']=$this->generateId();
         return $user;
     }
 
@@ -119,6 +119,7 @@ require 'Base.php';
         }
         return $users;    
     }
+    
     public function decodeDeletedUsers()
     {
         $users = [];
@@ -138,18 +139,17 @@ require 'Base.php';
 
     public function findJsonUser($data)
     {
-        if(decodeUsers()!= null)
+        if($this->decodeUsers()!= null)
             {
                 strpos($data);
-
             }    
         
     }
     public function findUserWhitName($data)
     {
-        if(decodeUsers()!= null)
+        if($this->decodeUsers()!= null)
             {
-                $users=decodeUsers();   
+                $users=$this->decodeUsers();   
                 foreach($users as $user)
                 {
                     if($user['username'] == $data)
@@ -183,10 +183,52 @@ require 'Base.php';
         
         
     }
+    public function decodeProducts()
+    {
+        $productsFile=file_get_contents('products.json');
+        $jsonProducts = explode(PHP_EOL , $productsFile);
+        array_pop($jsonProducts);
+        foreach($jsonProducts as $jsonProduct)
+        { 
+            $products[]=json_decode($jsonProduct, true);        
+        }
+        return $products;    
+    }
+    public function generateProductId()
+    {
+        $file= file_get_contents('products.json');
+
+        if($file == ""){
+            return 1;
+        }
+
+        $products=explode(PHP_EOL , $file);
+        array_pop($products);
+        $lastProduct=$products[count($products)-1];
+        $lastProduct=json_decode($lastProduct, true);
+        
+        return $lastProduct["id"]+1 ;
+        
+    }
+    public function saveProduct($product)
+    {
+        $product=[
+            'name'=> $_POST['name'],
+            'price'=> $_POST['price'],
+            'category'=> $_POST['category'],
+        ];
+        $product['id']=$this->generateProductId();
+
+        $jsonProduct=json_encode($product);
+        file_put_contents('products.json', $jsonProduct . PHP_EOL, FILE_APPEND);
+        return $product;
+        
+    }
 
 }
 
 $jsonManager= new Json;
+
 
 
 

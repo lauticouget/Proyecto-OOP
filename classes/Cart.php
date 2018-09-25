@@ -35,5 +35,5 @@ class Cart
 
         return $this;
     }
-    
 }
+$cart= new Cart($user);

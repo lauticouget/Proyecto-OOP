@@ -15,13 +15,15 @@ class Session
     }
     public function adminController()
     {
-        if($_SESSION['role']==7)
-            {
+        if (isset($_SESSION['role'])){
+            if($_SESSION['role']==7){
                 return true;
             }
             else{
                 return false;
             }
+        }
+        
         
     }
     public function loginController()

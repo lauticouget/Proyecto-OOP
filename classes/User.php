@@ -2,29 +2,33 @@
 
 class User
 {
-    private $nombre;
+    private $name;
+    private $username;
     private $email;
     private $password;
-    private $direccion;
+    private $role;
+    private $id;
 
 
 
-    public function __construct(string $nombre, string $email, string $password, string $direccion)
+    public function __construct(string $name, string $username, string $email, string $password, int $role, int $id)
     {
-        $this->nombre=$nombre;
+        $this->name=$name;
         $this->email=$email;
         $this->password=$password;
-        $this->direccion= $direccion;
+        $this->username=$username;
+        $this->role=$role;
+        $this->id=$id;
     }
 
-    public function getNombre()
+    public function getName()
     {
-        return $this->nombre;
+        return $this->name;
     }
 
-    public function setNombre($nombre)
+    public function setName($name)
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
 
         return $this;
     }
@@ -52,17 +56,42 @@ class User
         return $this;
     }
 
-    public function getDireccion()
+    public function getUserName()
     {
-        return $this->direccion;
+        return $this->userName;
     }
 
-
-    public function setDireccion($direccion)
+    public function setUserName($userName)
     {
-        $this->direccion = $direccion;
+        $this->userName = $userName;
+
+        return $this;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
 
         return $this;
     }
 }
 
+$userArray=$jsonManager->findUserWhitName($_SESSION['username']);
+$user=new User ($userArray['name'], $userArray['username'], $userArray['email'], $userArray['password'], $userArray['role'], $userArray['id']);

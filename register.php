@@ -1,19 +1,19 @@
 <?php
-include_once('functions.php');
+include_once('loader.php');
 
 if($_POST){
-	$errors=validate($_POST);
+	$errors=$validator->validate($_POST);
 	
 	
 	
 	if($errors==[]){
-		$user=createUser($_POST);
-		$avatarErrors=uploadAvatar($user);
+		$user=$jsonManager->createUser($_POST);
+		$avatarErrors=$validator->uploadAvatar($user);
 		$totalErrors=array_merge($errors, $avatarErrors);
 		
 		if($totalErrors== [])
 			{
-				saveUser($user);
+				$jsonManager->saveUser($user);
 				header('location: login.php');
 			}
 		
@@ -32,25 +32,9 @@ if($_POST){
 
 <!DOCTYPE html>
 <html lang="en">
-    <head> 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-
-		<!-- Website CSS style -->
-		<link rel="stylesheet" type="text/css" href="assets/css/main.css">
-
-		<!-- Website Font style -->
-	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-		
-		<!-- Google Fonts -->
-		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/reset.css">
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/master.css">
-		<title>Admin</title>
-	</head>
+    <?php
+	include_once 'head.php';
+	?>	
 	<body>
 		<div class="row d-flex  mx-auto">
 			<a class="boton_inicio"  href="index.php">Ir al inicio</a>
