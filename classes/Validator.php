@@ -132,6 +132,8 @@ class Validator
     }
     public function saveProductImage()
     {
+
+
         $errores=[];
         $defaultExt=".jpg";
 
@@ -156,10 +158,10 @@ class Validator
 
                 if($ext != "jpeg" && $ext != "jpg" && $ext != "png")
                     {/* Si la imagen no es del tipo correcto devolvemos error */
-                        $errores['image']="Débes subir tu imagen en JPG, PNG o JPEG.";
+                        $errores['image']="Debes subir tu imagen en JPG, PNG o JPEG.";
                         return $errores;
                     }
-
+                
                 $productPath=$productPath . $_POST['name'] . "." . $ext;
                 /* Movemos el archivo desde el espacio temporal (Server) A la base de datos (Renombrandolo con $productPath); */
                 move_uploaded_file($serverPath, $productPath);
@@ -167,15 +169,19 @@ class Validator
 
                             /* SI NO SUBEN FOTO */            
             }
-            
-            
-
+        
         if($_FILES['image']['name'] == "" ) { 
             $dirGenericProduct=$proyectPath."\images\genericProduct.png";
             $productPath=$productPath . $_POST['name'] . $defaultExt;    
             copy($dirGenericProduct, $productPath);      
         }
         return $errores;  
+    }
+    public function ImgExt()
+    {
+        $nombre=$_FILES['image']['name'];                
+        $ext=pathinfo($nombre , PATHINFO_EXTENSION);
+        return $ext;
     }
 
 }

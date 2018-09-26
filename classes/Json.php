@@ -210,12 +210,14 @@ require 'Base.php';
         return $lastProduct["id"]+1 ;
         
     }
-    public function saveProduct($product)
+    public function saveProduct($productObj)
     {
         $product=[
-            'name'=> $_POST['name'],
-            'price'=> $_POST['price'],
-            'category'=> $_POST['category'],
+            'name'=> $productObj->getName(),
+            'price'=> $productObj->getPrice(),
+            'category'=> $productObj->getCategory(),
+            'imageExt'=> $productObj->getImageExt(),
+            'imageRoot'=> $productObj->getImageRoot()
         ];
         $product['id']=$this->generateProductId();
 

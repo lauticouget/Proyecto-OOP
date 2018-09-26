@@ -3,12 +3,9 @@
 
 class Image
 {
-    public function searchImg($imgName, $imgFolder)
+    public function searchImg($root)
     {
-        $file=dirname(__file__);
-        $file=dirname($file);
-        
-        return $file."/images/".$imgFolder."/".$imgName;
-    }
+        return;
+    } 
 }
 $imageManager= new Image;

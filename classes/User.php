@@ -14,9 +14,9 @@ class User
     public function __construct(string $name, string $username, string $email, string $password, int $role, int $id)
     {
         $this->name=$name;
+        $this->username=$username;
         $this->email=$email;
         $this->password=$password;
-        $this->username=$username;
         $this->role=$role;
         $this->id=$id;
     }
@@ -92,6 +92,9 @@ class User
         return $this;
     }
 }
+if(isset($_SESSION['username'])){
+    $userArray=$jsonManager->findUserWhitName($_SESSION['username']);
+    $user=new User ($userArray['name'], $userArray['username'], $userArray['email'], $userArray['password'], $userArray['role'], $userArray['id']);
+}
 
-$userArray=$jsonManager->findUserWhitName($_SESSION['username']);
-$user=new User ($userArray['name'], $userArray['username'], $userArray['email'], $userArray['password'], $userArray['role'], $userArray['id']);
+

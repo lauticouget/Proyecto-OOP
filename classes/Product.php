@@ -1,18 +1,20 @@
 <?php
-
 class Product
 {
     private $name;
     private $price;
     private $category;
+    private $imageExt;
     private $imageRoot;
+    private $id;
 
-
-    public function __construct(string $name, float $price, string $category, string $imageRoot) {
+    public function __construct(string $name, float $price, string $category, string $imageExt) {
         $this->name=$name;
         $this->price=$price;
         $this->category=$category;
-        $this->imageRoot->$imageRoot;
+        $this->imageExt=$imageExt;
+        $this->imageRoot ="images/products/". $name . "." .$imageExt;
+        $this->id=null;
     }
 
     public function getName()
@@ -22,6 +24,18 @@ class Product
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+ 
+    public function setCategory($category)
+    {
+        $this->category = $category;
 
         return $this;
     }
@@ -37,15 +51,15 @@ class Product
 
         return $this;
     }
- 
-    public function getImage()
+
+    public function getImageExt()
     {
-        return $this->image;
+        return $this->imageExt;
     }
 
-    public function setImage($image)
+    public function setImageExt($imageExt)
     {
-        $this->image = $image;
+        $this->imageExt = $imageExt;
 
         return $this;
     }
@@ -58,6 +72,18 @@ class Product
     public function setImageRoot($imageRoot)
     {
         $this->imageRoot = $imageRoot;
+
+        return $this;
+    }
+ 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
 
         return $this;
     }

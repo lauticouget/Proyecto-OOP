@@ -9,7 +9,7 @@ class Cart
 
     public function __construct(User $user)
     {
-        $this->User= $user;
+        $this->user= $user;
         $this->products= [];
     }
 
@@ -35,5 +35,6 @@ class Cart
 
         return $this;
     }
+    
 }
 $cart= new Cart($user);
