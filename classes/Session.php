@@ -1,19 +1,23 @@
 <?php 
-session_Start();
+
+
+
 class Session
 {
-    public function Login($foundUser)
+    public static function Login($foundUser)
     {
+        session_start();
+        dd($_SESSION);
         $_SESSION['username']=$foundUser['username'];
         $_SESSION['role']=$foundUser['role'];
         setcookie('username', $foundUser['username'], time()+3600);
     }
-    public function userRecord($foundUser)
+    public static function userRecord($foundUser)
     {
     setcookie ('userRecord', $foundUser['username'], time()+(60*60*24*30*12));
     
     }
-    public function adminController()
+    public static function adminController()
     {
         if (isset($_SESSION['role'])){
             if($_SESSION['role']==7){
@@ -26,7 +30,7 @@ class Session
         
         
     }
-    public function loginController()
+    public static function loginController()
     {
         if(isset($_SESSION['username']))
         {
@@ -40,10 +44,10 @@ class Session
         }
 
     }
-    public function logout()
+    public static function logout()
     {
         session_destroy();
         setcookie('username', "", time()-1);
     }
 }
-$sessionManager= new Session;
+

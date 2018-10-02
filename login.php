@@ -9,16 +9,19 @@ if($_POST)
   if ($foundUser != null)
   {
     $checkedPassword=$validator->checkPassword($_POST,$foundUser);
+    
     if($checkedPassword) 
-      {        
-        $sessionManager->login($foundUser);
+      {       
         
-        if($sessionManager->loginController())
+        Session::login($foundUser);
+        
+        if(Session::loginController())
           {
             if(isset($_POST['userRecord']))
               {
                 $sessionManager->userRecord($foundUser);
               }
+              
             header('location: index.php');
           }
       }

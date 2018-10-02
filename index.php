@@ -1,7 +1,6 @@
 <?php 
 include_once('loader.php');
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

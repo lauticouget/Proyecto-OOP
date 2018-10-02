@@ -1,11 +1,13 @@
 <?php 
 
+
+
 class Cart 
 
 {
 
-    private $user;
-    private $products;
+    private  $user;
+    private  $products;
 
     public function __construct(User $user)
     {
@@ -35,6 +37,13 @@ class Cart
 
         return $this;
     }
+
+
     
 }
-$cart= new Cart($user);
+
+
+if (isset($user)){
+    $cart= new Cart ($user);
+}
+
